@@ -8,13 +8,15 @@ import { FormsModule } from '@angular/forms';
 import { PercentagePipe } from './percentage.pipe';
 import { ProbeCalcComponent } from './probe-calc/probe-calc.component';
 import { RangeFightCalcComponent } from './range-fight-calc/range-fight-calc.component';
+import { BackgroundComponent } from './background/background.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PercentagePipe,
     ProbeCalcComponent,
-    RangeFightCalcComponent
+    RangeFightCalcComponent,
+    BackgroundComponent,
   ],
   imports: [
     BrowserModule,

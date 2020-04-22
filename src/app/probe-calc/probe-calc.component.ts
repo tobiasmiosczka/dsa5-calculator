@@ -13,34 +13,28 @@ export class ProbeCalcComponent implements OnInit {
   value1: number = 10;
   value2: number = 10;
   value3: number = 10;
+  fw: number = 0;
+  mod: number = 0;
 
   w1: number;
   w2: number;
   w3: number;
   result: string;
 
-  fw: number = 0;
-  mod: number = 0;
-
-  backgroundAnimation: boolean;
-
-  data: QsProbabilities = {criticalMiss: (58.0 / 8000.0), miss: 0, qs1: 0, qs2: 0, qs3: 0, qs4: 0, qs5: 0, qs6: 0, criticalSuccess: (58.0 / 8000.0)};  ;
+  data: QsProbabilities = {criticalMiss: (58.0 / 8000.0), miss: 0, qs1: 0, qs2: 0, qs3: 0, qs4: 0, qs5: 0, qs6: 0, criticalSuccess: (58.0 / 8000.0)};
 
   googleLoaded: boolean = false;
 
   ngOnInit(): void {
-    this.backgroundAnimation = true;
+    this.uptdateProbabilities();
     if (runGenScene) {
       runGenScene();
     } else {
-      console.error('Scene not found')
+      console.error('Scene not found');
     }
-
-    this.uptdateProbabilities();
   }
 
   uptdateProbabilities(): void {
-    //this workaround fixes some weird behavior, someone should fix this
     let d = this.getProbability(this.fw, this.mod, this.value1, this.value2, this.value3);
     this.data.criticalMiss = d.criticalMiss;
     this.data.criticalSuccess = d.criticalSuccess;
@@ -55,18 +49,13 @@ export class ProbeCalcComponent implements OnInit {
   }
 
   min(a: number, b: number): number {
-    if (a < b) return a;
-    return b;
+    return (a < b) ? a : b;
   }
 
   getProbability(fw: number, mod: number, val1: number, val2: number, val3: number): QsProbabilities {
     let result: QsProbabilities = {criticalMiss: (58.0 / 8000.0), miss: 0, qs1: 0, qs2: 0, qs3: 0, qs4: 0, qs5: 0, qs6: 0, criticalSuccess: (58.0 / 8000.0)};
-
     let qsProbs: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-    let a: number;
-    let b: number;
-    let c: number;
+    let a, b, c: number;
     for (a = 1; a <= 20; ++a) {
       for (b = 1; b <= 20; ++b) {
         for (c = 1; c <= 20; ++c) {
@@ -135,7 +124,7 @@ export class ProbeCalcComponent implements OnInit {
     return 6;
   }
 
-  probe() {
+  probe(): void {
     this.w1 = Math.floor(Math.random() * 20) + 1;
     this.w2 = Math.floor(Math.random() * 20) + 1;
     this.w3 = Math.floor(Math.random() * 20) + 1;
