@@ -9,6 +9,7 @@ import { PercentagePipe } from './percentage.pipe';
 import { ProbeCalcComponent } from './probe-calc/probe-calc.component';
 import { RangeFightCalcComponent } from './range-fight-calc/range-fight-calc.component';
 import { BackgroundComponent } from './background/background.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { BackgroundComponent } from './background/background.component';
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

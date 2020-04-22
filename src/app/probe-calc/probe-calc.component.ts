@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QsProbabilities } from '../model/QsProbabilities';
 
-declare function runGenScene(): any;
-declare var google: any;
-
 @Component({
   selector: 'app-probe-calc',
   templateUrl: './probe-calc.component.html',
@@ -21,31 +18,46 @@ export class ProbeCalcComponent implements OnInit {
   w3: number;
   result: string;
 
-  data: QsProbabilities = {criticalMiss: (58.0 / 8000.0), miss: 0, qs1: 0, qs2: 0, qs3: 0, qs4: 0, qs5: 0, qs6: 0, criticalSuccess: (58.0 / 8000.0)};
+  // options
+  gradient: boolean = false;
+  showLegend: boolean = true;
+  showXAxisLabel: boolean = true;
+  showYAxisLabel: boolean = true;
 
-  googleLoaded: boolean = false;
+  colorScheme = {
+    domain: [
+      '#000', 
+      '#A10A28', 
+      '#5AA454', 
+      '#5AA454',
+      '#5AA454', 
+      '#5AA454', 
+      '#5AA454',
+      '#5AA454', 
+      '#5AA454',
+    ]
+  };
+
+  d: QsProbabilities;
+  data: any[] = [];
 
   ngOnInit(): void {
     this.uptdateProbabilities();
-    if (runGenScene) {
-      runGenScene();
-    } else {
-      console.error('Scene not found');
-    }
   }
 
   uptdateProbabilities(): void {
-    let d = this.getProbability(this.fw, this.mod, this.value1, this.value2, this.value3);
-    this.data.criticalMiss = d.criticalMiss;
-    this.data.criticalSuccess = d.criticalSuccess;
-    this.data.miss = d.miss;
-    this.data.qs1 = d.qs1;
-    this.data.qs2 = d.qs2;
-    this.data.qs3 = d.qs3;
-    this.data.qs4 = d.qs4;
-    this.data.qs5 = d.qs5;
-    this.data.qs6 = d.qs6;
-    this.updateChart();
+    this.d = this.getProbability(this.fw, this.mod, this.value1, this.value2, this.value3);
+    this.data = [
+      {name: this.getResultString(0), value: this.d.criticalMiss },
+      {name: this.getResultString(1), value: this.d.miss },
+      {name: this.getResultString(2), value: this.d.qs1 },
+      {name: this.getResultString(3), value: this.d.qs2 },
+      {name: this.getResultString(4), value: this.d.qs3 },
+      {name: this.getResultString(5), value: this.d.qs4 },
+      {name: this.getResultString(6), value: this.d.qs5 },
+      {name: this.getResultString(7), value: this.d.qs6 },
+      {name: this.getResultString(8), value: this.d.criticalSuccess }
+    ];
   }
 
   min(a: number, b: number): number {
@@ -129,54 +141,5 @@ export class ProbeCalcComponent implements OnInit {
     this.w2 = Math.floor(Math.random() * 20) + 1;
     this.w3 = Math.floor(Math.random() * 20) + 1;
     this.result = this.getResultString(this.getResult(this.w1, this.w2, this.w3, this.value1, this.value2, this.value3, this.fw, this.mod));
-  }
-
-  getDataTable(): any {
-    let dataTable = new google.visualization.DataTable();
-    dataTable.addColumn({ type: 'string', id: 'Name' });
-    dataTable.addColumn({ type: 'number', id: 'propability' });
-    return dataTable;
-  }
-
-  private drawChart(){
-    let dataTable = new google.visualization.arrayToDataTable([
-      ['Ergebnis', 'Wahrscheinlichkeit [%]'],
-      ['Krtitischer Patzer', this.data.criticalMiss],
-      ['Patzer', this.data.miss],
-      ['QS1', this.data.qs1],
-      ['QS2', this.data.qs2],
-      ['QS3', this.data.qs3],
-      ['QS4', this.data.qs4],
-      ['QS5', this.data.qs5],
-      ['QS6', this.data.qs6],
-      ['Kritischer Erfolg', this.data.criticalSuccess]
-    ]);
-    let container = document.getElementById('chart');
-    if(container != null) {
-      let chart = new google.charts.Bar(container);
-      if (chart != null) {
-        chart.draw(dataTable, 
-          {
-            tooltip: { 
-              trigger: 'none' 
-            }, 
-            bars: 'horizontal',
-            legend: {
-              position: 'none'
-            },
-            hAxis: {
-              format: 'percent'
-            }
-          });
-      }
-    } 
-  }
-
-  updateChart() {
-    if(!this.googleLoaded) {
-      google.charts.load('current', {'packages':['bar']});
-      this.googleLoaded = true;
-    }
-    google.charts.setOnLoadCallback(() =>  this.drawChart());
   }
 }

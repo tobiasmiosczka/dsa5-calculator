@@ -55,7 +55,7 @@
         </td>
     </tr>
     </table>
-    <mat-tab-group dynamicHeight (selectedTabChange)="updateChart()">
+    <mat-tab-group dynamicHeight>
         <mat-tab label="Tabelle">
             <table>
             <tr>
@@ -68,44 +68,53 @@
             </tr>
             <tr>
                 <td>Kritischer Patzer</td>
-                <td>{{data.criticalMiss | percentage}}</td>
+                <td>{{d.criticalMiss | percentage}}</td>
             </tr>
             <tr>
                 <td>Patzer</td>
-                <td>{{data.miss | percentage}}</td>
+                <td>{{d.miss | percentage}}</td>
             </tr>
             <tr>
                 <td>QS 1</td>
-                <td>{{data.qs1 | percentage}}</td>
+                <td>{{d.qs1 | percentage}}</td>
             </tr>
             <tr>
                 <td>QS 2</td>
-                <td>{{data.qs2 | percentage}}</td>
+                <td>{{d.qs2 | percentage}}</td>
             </tr>
             <tr>
                 <td>QS 3</td>
-                <td>{{data.qs3 | percentage}}</td>
+                <td>{{d.qs3 | percentage}}</td>
             </tr>
             <tr>
                 <td>QS 4</td>
-                <td>{{data.qs4 | percentage}}</td>
+                <td>{{d.qs4 | percentage}}</td>
             </tr>
             <tr>
                 <td>QS 5</td>
-                <td>{{data.qs5 | percentage}}</td>
+                <td>{{d.qs5 | percentage}}</td>
             </tr>
             <tr>
                 <td>QS 6</td>
-                <td>{{data.qs6 | percentage}}</td>
+                <td>{{d.qs6 | percentage}}</td>
             </tr>
             <tr>
                 <td>Kritischer Erfolg</td>
-                <td>{{data.criticalSuccess | percentage}}</td>
+                <td>{{d.criticalSuccess | percentage}}</td>
             </tr>
         </table>
     </mat-tab>
     <mat-tab label="Grafik">
-        <div id="chart"></div>
+        <ngx-charts-bar-horizontal
+            [scheme]="colorScheme"
+            [results]="data"
+            [gradient]="gradient"
+            [xAxis]="true"
+            [yAxis]="true"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [animations]="false">
+        </ngx-charts-bar-horizontal>
     </mat-tab>
     <mat-tab label="Probe">
         <div class="center">

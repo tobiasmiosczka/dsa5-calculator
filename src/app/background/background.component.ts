@@ -123,8 +123,8 @@ export class BackgroundComponent implements OnInit {
   private updateBalls(): void {
     let new_balls = new Array<Ball>();
     Array.prototype.forEach.call(this.balls, b => {
-      b.x += (b.vx + (this.dx * 10)) * this.ballSpeed;
-      b.y += (b.vy + (this.dy * 10)) * this.ballSpeed;
+      b.x += (b.vx + (this.dx * 5)) * this.ballSpeed;
+      b.y += (b.vy + (this.dy * 5)) * this.ballSpeed;
       if (b.x >= -(this.distanceLimit) && b.x <= (this.canvasWidth + this.distanceLimit) && b.y >= -(this.distanceLimit) && b.y <= (this.canvasHeight + this.distanceLimit)) {
         b.phase += this.phaseSpeed;
         new_balls.push(b);
@@ -193,7 +193,6 @@ export class BackgroundComponent implements OnInit {
       this.mouseBall.y = e.pageY;
       this.dx = 2 * (window.innerWidth / 2 - e.pageX) / window.innerWidth;
       this.dy = 2 * (window.innerHeight / 2 - e.pageY) / window.innerHeight;
-      console.log(this.dx + " " + this.dy);
     });
 
     this.initCanvas();

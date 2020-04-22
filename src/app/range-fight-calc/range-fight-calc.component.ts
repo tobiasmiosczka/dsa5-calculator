@@ -39,7 +39,7 @@ export class RangeFightCalcComponent implements OnInit {
     {value: -2, viewValue: "leicht gestört"},
     {value: -4, viewValue: "Silhouette"},
     {value: -6, viewValue: "schemenhaft"},
-    {value: -100, viewValue: "unsichtbar"}
+    {value: +0, viewValue: "unsichtbar"}
   ];
 
   range: any = this.ranges[1];
@@ -49,6 +49,7 @@ export class RangeFightCalcComponent implements OnInit {
   sight: any = this.sights[0];
 
   result: number;
+  resultString: string ="";
 
   constructor() { }
 
@@ -59,6 +60,11 @@ export class RangeFightCalcComponent implements OnInit {
       + this.movementEnemy.value
       + this.movementSelf.value
       + this.sight.value;
+
+    if (this.sight.viewValue == "unsichtbar")
+      this.resultString = "Nur bei kritischem Treffer getroffen.";
+    else
+      this.resultString = ((this.result >= 0) ? "Bonus: " : "Malus: ") + Math.abs(this.result);
   }
 
   ngOnInit(): void {
