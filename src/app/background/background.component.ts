@@ -45,7 +45,7 @@ class Color {
 export class BackgroundComponent implements OnInit {
 
   private ballColor: Color = new Color(255, 255, 255);
-  private lineColor: Color = new Color(150, 150, 150);
+  private lineAlpha: number = 0.3;
   private ballCount: number = 200;
   private ballSpeed: number = 0.5;
   private phaseSpeed: number = 0.01;
@@ -123,8 +123,11 @@ export class BackgroundComponent implements OnInit {
   private updateBalls(): void {
     let new_balls = new Array<Ball>();
     Array.prototype.forEach.call(this.balls, b => {
-      b.x += (b.vx + (this.dx * 5)) * this.ballSpeed;
-      b.y += (b.vy + (this.dy * 5)) * this.ballSpeed;
+
+      if (b.ballType == BallType.NORMAL) {
+        b.x += (b.vx + (this.dx * (b.r + 5) * 0.5)) * this.ballSpeed;
+        b.y += (b.vy + (this.dy * (b.r + 5) * 0.5)) * this.ballSpeed;
+      }
       if (b.x >= -(this.distanceLimit) && b.x <= (this.canvasWidth + this.distanceLimit) && b.y >= -(this.distanceLimit) && b.y <= (this.canvasHeight + this.distanceLimit)) {
         b.phase += this.phaseSpeed;
         new_balls.push(b);
@@ -142,7 +145,7 @@ export class BackgroundComponent implements OnInit {
       for (let j: number = i + 1; j < this.balls.length; j++) {
         fraction = this.getDistance(this.balls[i], this.balls[j]) / this.distanceLimit;
         if (fraction < 1){
-          this.ctx.strokeStyle = 'rgba(' + this.lineColor.r + ', ' + this.lineColor.g + ', ' + this.lineColor.b + ', ' + (1 - fraction) + ')';
+          this.ctx.strokeStyle = 'rgba(' + this.ballColor.r + ', ' + this.ballColor.g + ', ' + this.ballColor.b + ', ' + (1 - fraction) * this.lineAlpha + ')';
           this.ctx.lineWidth = this.lineWidth;
           this.ctx.beginPath();
           this.ctx.moveTo(this.balls[i].x, this.balls[i].y);

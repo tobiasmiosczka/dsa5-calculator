@@ -6,7 +6,7 @@
         <td>
             <label>{{value1}}</label>
         </td>
-        <td>
+        <td class="inputCol">
             <mat-slider class="input" thumbLabel color="primary" matTooltip="Wert 1" [(ngModel)]="value1" (ngModelChange)="uptdateProbabilities()" min="1" max="25">Test</mat-slider>
         </td>
     </tr>
@@ -17,7 +17,7 @@
         <td>
             <label>{{value2}}</label>
         </td>
-        <td>
+        <td class="inputCol">
             <mat-slider class="input" thumbLabel color="primary" matTooltip="Wert 2" [(ngModel)]="value2" (ngModelChange)="uptdateProbabilities()" min="1" max="25"></mat-slider>
         </td>
     </tr>
@@ -28,7 +28,7 @@
         <td>
             <label>{{value3}}</label>
         </td>
-        <td>
+        <td class="inputCol">
             <mat-slider class="input" thumbLabel color="primary" matTooltip="Wert 3" [(ngModel)]="value3" (ngModelChange)="uptdateProbabilities()" min="1" max="25"></mat-slider>
         </td>
     </tr>
@@ -39,7 +39,7 @@
         <td>
             <label>{{fw}}</label>
         </td>
-        <td>
+        <td class="inputCol">
             <mat-slider class="input" thumbLabel color="primary" matTooltip="Fertigkeitswert" [(ngModel)]="fw"  min="0" max="25" (ngModelChange)="uptdateProbabilities()"></mat-slider>
         </td>
     </tr>
@@ -50,7 +50,7 @@
         <td>
             <label>{{mod}}</label>
         </td>
-        <td>
+        <td class="inputCol">
             <mat-slider class="input" thumbLabel color="primary" matTooltip="Bonus / Malus" [(ngModel)]="mod"  min="-25" max="25" (ngModelChange)="uptdateProbabilities()"></mat-slider>
         </td>
     </tr>
