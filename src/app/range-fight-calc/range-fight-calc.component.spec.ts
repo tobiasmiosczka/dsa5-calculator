@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RangeFightCalcComponent } from './range-fight-calc.component';
 
@@ -6,7 +6,7 @@ describe('RangeFightCalcComponent', () => {
   let component: RangeFightCalcComponent;
   let fixture: ComponentFixture<RangeFightCalcComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RangeFightCalcComponent ]
     })
